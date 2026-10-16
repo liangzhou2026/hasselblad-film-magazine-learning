@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>哈苏后背 · 正在打开统一学习台</title>
+  <script>
+    (() => {
+      const query = new URLSearchParams(location.search);
+      const model = (query.get('model') || 'A16S').toUpperCase();
+      const requestedMode = query.get('mode');
+      const precise = ['A12', 'A16', 'A24'].includes(model);
+      const mode = precise ? (requestedMode || 'structure') : 'exploded';
+      const target = new URL('index.html', location.href);
+      target.searchParams.set('model', model);
+      target.searchParams.set('mode', mode);
+      if (['en', 'zh', 'zh-CN'].includes(query.get('lang'))) target.searchParams.set('lang', query.get('lang'));
+      location.replace(target.href);
+    })();
+  </script>
+</head>
+<body>
+  <p>所有型号已合并到同一学习台。<a href="index.html">打开统一页面</a></p>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>哈苏 16 型后背 · 三维学习台</title>
+  <meta name="description" content="16型哈苏胶片后背三维学习模型、中文零件与文献索引；A12、A16、A24另有拆卸安装学习动画。独立社区项目，几何与运动为教学示意。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231b292d'/%3E%3Crect x='12' y='12' width='40' height='40' rx='5' fill='none' stroke='%23b8d8c9' stroke-width='4'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='sans-serif' font-size='22' fill='white'%3E12%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="disassembly-studio.css?v=1">
+  <link rel="stylesheet" href="unified-magazine-shell.css?v=2">
+  <link rel="stylesheet" href="public-resources.css">
+  <link rel="stylesheet" href="i18n.css">
+  <script defer src="release-config.js"></script>
+  <script defer src="public-resources.js"></script>
+  <script defer src="vendor/three.min.js"></script>
+  <script defer src="magazine-surfaces.js?v=20260930-realism"></script>
+  <script defer src="rollfilm-orientation.js?v=20260930-orientation2"></script>
+  <script defer src="manual-magazine-catalog.js"></script>
+  <script defer src="parts-data.js"></script>
+  <script defer src="detail-model.js?v=20260930-realism"></script>
+  <script defer src="body-details.js?v=20260930-realism"></script>
+  <script defer src="service-sequences.js"></script>
+  <script defer src="magazine-fasteners.js?v=20260930-realism"></script>
+  <script defer src="magazine-variants.js"></script>
+  <script defer src="assembly-variants.js"></script>
+  <script defer src="disassembly-animation.js"></script>
+  <script defer src="assembly-animation.js"></script>
+  <script defer src="beginner-animation.js?v=20260930-orientation"></script>
+  <script defer src="video-library.js"></script>
+  <script defer src="manual-magazine-models.js?v=20260930-realism"></script>
+  <script defer src="precision-factories.js?v=20260930-realism"></script>
+  <script defer src="precision-magazine-models.js?v=20260930-orientation"></script>
+  <script defer src="special-magazine-details.js?v=20260930-realism"></script>
+  <script defer src="manual-part-labels.js"></script>
+  <script defer src="free-magazine-layout.js"></script>
+  <script defer src="learning-magazine-model.js?v=20260930-realism"></script>
+  <script defer src="magazine-stage.js?v=20260930-realism"></script>
+  <script defer src="viewer-controller.js?v=20260930-orientation"></script>
+  <script defer src="unified-magazine-shell.js"></script>
+  <script defer src="app.js?v=20260930-orientation"></script>
+  <script defer src="magazine-library.js?v=20260930-orientation"></script>
+  <script defer src="i18n-catalog-en.js"></script>
+  <script defer src="i18n-parts-en.js"></script>
+  <script defer src="i18n-courses-en.js"></script>
+  <script defer src="i18n-ui-en.js"></script>
+  <script defer src="i18n.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand"><span class="brand-mark" aria-label="Hasselblad"><span id="magazine-badge">H</span></span><div><h1 id="magazine-title">胶片后背学习台</h1><p>HASSELBLAD · FILM MAGAZINE</p></div></div>
+    <nav class="magazine-nav" aria-label="切换后背型号"><a href="?model=A12&amp;mode=disassembly" data-model-link="A12">A12</a><a href="?model=A16&amp;mode=disassembly" data-model-link="A16">A16</a><a href="?model=A24&amp;mode=disassembly" data-model-link="A24">A24</a><a href="#magazine-model" id="all-models-link">全部 16 型</a></nav>
+    <button class="quiet" id="open-manual">维修手册 ↗</button>
+    <label class="language-picker" data-no-i18n><span>语言 / Language</span><select id="language-select" aria-label="语言 / Language"><option value="zh">中文</option><option value="en">English</option></select></label>
+  </header>
+  <main class="workspace">
+    <aside class="parts-panel">
+      <div class="magazine-picker"><span class="eyebrow" id="catalog-count">V SYSTEM / 16 MAGAZINES</span><label for="magazine-model">后背型号</label><select id="magazine-model">
+        <optgroup label="机械 A 系列"><option value="A12">A12 · 精细拆装</option><option value="A16">A16 · 精细拆装</option><option value="A16S">A16S · 方形画框</option><option value="A24">A24 · 精细拆装</option><option value="A32">A32 · 32 张型</option></optgroup>
+        <optgroup label="TCC 系列"><option value="A12TCC">A12 TCC</option><option value="A16TCC">A16 TCC</option><option value="A24TCC">A24 TCC</option></optgroup>
+        <optgroup label="E 系列"><option value="E12">E12</option><option value="E16">E16</option><option value="E24">E24</option><option value="E12CC">E12CC</option></optgroup>
+        <optgroup label="70 mm 系列"><option value="MAGAZINE70">Magazine 70</option></optgroup>
+        <optgroup label="Polaroid 系列"><option value="POLAROID100">Polaroid 100</option><option value="POLABASIC">PolaBasic</option><option value="POLAPLUS">PolaPlus</option></optgroup>
+      </select><p id="magazine-scope"></p><details><summary>型号与资料依据</summary><p id="magazine-version"></p><a href="#source-dialog" data-public-document="bulletins" data-public-page="120">改型通告资料索引</a></details></div>
+      <div class="panel-heading"><h2>零件与总成</h2><span id="visible-count"></span></div>
+      <p class="panel-hint">展开总成查看子件；点击名称或模型认件。</p>
+      <input id="part-search" type="search" placeholder="查名称或零件编号" aria-label="查找零件名称或编号">
+      <div class="catalog-tools"><button class="quiet" id="expand-parts">展开子件</button><button class="quiet" id="collapse-parts">收起子件</button></div>
+      <div id="parts-list"></div>
+      <div class="list-footer"><button class="quiet" id="show-all">显示全部</button><button class="quiet" id="reset-model">恢复初始</button></div>
+    </aside>
+    <section class="stage-panel" aria-label="三维模型工作区">
+      <nav class="view-modes" aria-label="观察模式">
+        <button data-mode="structure" aria-pressed="true">内部结构</button>
+        <button data-mode="assembled" aria-pressed="false">完整外观</button>
+        <button data-mode="exploded" aria-pressed="false">分层爆炸</button>
+        <button data-mode="lubrication" aria-pressed="false">润滑索引</button>
+      </nav>
+      <div class="learning-launch"><button data-sequence="disassembly">▶ 拆卸动画 <small>22 步</small></button><button data-sequence="assembly" id="assembly-entry">▶ 安装动画 <small>26 步</small></button><button class="beginner-entry" data-tab="learn">故障排查与维护视频</button></div>
+      <div id="viewport">
+        <div class="stage-caption"><span id="mode-caption">普通 A12 · 内部结构</span><span id="selection-caption">点击模型中的零件查看</span></div>
+        <div id="canvas-host" role="img" aria-label="可拖动旋转和滚轮缩放的 A12 三维结构模型；也可以使用左侧零件列表和视角按钮。"></div>
+        <div id="labels-layer"></div>
+        <div id="hover-label" hidden></div>
+        <div class="view-buttons" aria-label="固定视角"><button data-view="perspective" aria-label="立体视角">立体</button><button data-view="side" aria-label="机构侧视角">机构侧</button><button data-view="opposite" aria-label="片芯端板侧视角">片芯侧</button><button data-view="front" aria-label="机身接合面视角">接合面</button><button id="fit-model">完整取景</button><button id="focus-part">放大所选</button><button id="zoom-in" aria-label="放大模型">＋</button><button id="zoom-out" aria-label="缩小模型">−</button></div>
+        <div class="stage-instructions">拖动旋转 · 滚轮缩放 · 点击选择<span id="render-state">正在建立模型…</span></div>
+        <div id="error-message" role="alert" hidden></div>
+      </div>
+      <section id="workflow-controls" class="workflow-controls" hidden aria-label="后背拆装动画控制">
+        <div class="workflow-top"><span class="eyebrow" id="workflow-count"></span><span id="workflow-view">播放中可旋转、缩放 · 橙色为当前零件</span></div>
+        <label class="sr-only" for="workflow-step">选择拆装步骤</label><select id="workflow-step"></select>
+        <p id="workflow-phase" role="status" aria-live="polite"></p>
+        <div class="workflow-buttons"><button id="workflow-prev">上一步</button><button id="workflow-play" class="primary">播放本步</button><button id="workflow-next">下一步</button><button id="workflow-reset">从头查看</button></div>
+        <label class="workflow-range-label" for="workflow-progress">本步进度 <output id="workflow-value">0%</output></label><input id="workflow-progress" type="range" min="0" max="100" step="1" value="0">
+        <div class="workflow-options"><label for="workflow-speed">速度</label><select id="workflow-speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select><label><input id="workflow-auto" type="checkbox"> 自动下一步</label><button id="workflow-reference">本步手册页</button></div>
+        <p id="workflow-boundary" class="workflow-boundary"></p>
+      </section>
+      <div id="lesson-controls" hidden>
+        <div class="lesson-playing-heading"><strong id="lesson-current-title"></strong><span id="lesson-time">0:00 / 0:28</span></div>
+        <p id="lesson-caption" aria-live="polite"></p>
+        <input type="range" id="lesson-progress" min="0" max="28" value="0" step="0.1" aria-label="新手动画进度">
+        <div class="lesson-playback"><button id="lesson-play">暂停</button><button id="lesson-replay">重播</button><label for="lesson-speed">速度</label><select id="lesson-speed"><option value="0.5">0.5× 慢放</option><option value="1" selected>1×</option><option value="1.5">1.5×</option></select><button id="lesson-stop" class="quiet">退出动画</button></div>
+        <p class="lesson-boundary">金色表示本段高亮 · 分离距离为示意，不代表真实取件路线。</p>
+      </div>
+      <div class="stage-controls" id="free-controls">
+        <label class="explosion-label" for="explode">分层展开 <output id="explode-value">0%</output></label>
+        <input id="explode" type="range" min="0" max="100" value="0" aria-label="分层展开程度">
+        <div class="toggle-row"><label><input id="show-labels" type="checkbox" checked> 零件标签</label><label><input id="show-lube" type="checkbox"> 润滑索引</label><button class="quiet" id="isolate">只看所选</button></div>
+        <p class="model-boundary">齿数、齿形与尺寸为示意；展开不代表实际拆卸顺序。未模拟齿轮相位、弹簧预紧或装配公差。</p>
+      </div>
+    </section>
+    <aside class="info-panel">
+      <nav class="info-tabs" aria-label="学习资料"><button data-tab="part" aria-selected="true">零件</button><button data-tab="sources" aria-selected="false">资料</button><button data-tab="learn" aria-selected="false">视频</button><button data-tab="steps" aria-selected="false">拆装</button><button data-tab="care" aria-selected="false">养护</button></nav>
+      <section id="learn-panel" class="info-content" hidden>
+        <div class="eyebrow">WATCH · IDENTIFY · CHECK</div><h2>故障排查与维护视频</h2>
+        <p>结合配套认件动画，查看清洁、遮光密封、联锁卡滞与首张不停片等实物案例，并对照手册原图。</p>
+        <div id="lesson-list" class="lesson-list"></div>
+        <div id="lesson-chapter-panel" hidden><h3>本课分段</h3><div id="lesson-chapters"></div><div id="lesson-pages" class="source-links"></div><p class="lesson-source">动画依据：原厂手册与本地模型；不是视频逐帧复原。可以暂停后旋转模型。</p></div>
+        <h3 class="video-section-title">YouTube 故障与维护视频</h3><p class="video-scope">点击后联网播放。时间点注明依据；自动字幕可能识别错误，材料与润滑要求仍以原图为准。</p>
+        <div id="video-list"></div>
+      </section>
+      <section id="part-panel" class="info-content" aria-live="polite"></section>
+      <section id="steps-panel" class="info-content" hidden>
+        <div class="eyebrow">SERVICE SEQUENCE</div>
+        <label class="sequence-type-label" for="sequence-type">手册步骤</label>
+        <select id="sequence-type"><option value="disassembly">拆卸 · 侧机构、外板与外壳</option><option value="assembly">安装 · 润滑、校准与检查</option></select>
+        <p class="sequence-scope" id="sequence-scope">后期机械 A 系列；片芯保持总成取出。拆卸位移为教学示意，弹簧释能和机构调校须对照原厂资料。</p>
+        <div class="step-progress"><span id="step-count"></span><span id="step-kind"></span></div>
+        <div class="step-nav"><button id="step-prev">← 上一步</button><button id="step-next">下一步 →</button></div>
+        <h2 id="step-title"></h2><p id="step-body"></p>
+        <div class="step-phase" aria-label="本步骤状态"><button data-phase="before" aria-pressed="true">操作前</button><button data-phase="after" aria-pressed="false">操作后</button></div>
+        <p id="step-state" aria-live="polite"></p>
+        <div id="step-parts"></div><div id="step-sources" class="source-links"></div>
+        <div id="step-note" class="info-note"></div>
+        <div class="step-view"><button id="focus-step">放大本步零件</button><button id="step-overview">查看全景</button></div>
+        <details class="steps-outline"><summary>查看全部步骤</summary><div id="step-list"></div></details>
+        <button class="quiet" id="exit-sequence">退出步骤，回到结构观察</button>
+      </section>
+      <section id="care-panel" class="info-content" hidden><div class="eyebrow">MAINTENANCE</div><h2>从检查开始</h2><div id="care-list"></div><div class="info-note">浏览器模型不能完成实机漏光、片距、划伤和计数检查。</div></section>
+      <section id="sources-panel" class="info-content" hidden>
+        <div class="eyebrow">REFERENCE</div><h2>文献与建模依据</h2>
+        <p>名称与零件编号来自维修手册；形状、厚度、孔位、齿形及展开距离为教学重建，未实测。</p>
+        <p>三型号基础模型与拆解动画整理自同一维护者的相机维修学习项目（2026-09-30 版本）。安装动画按维修资料编排。本站为独立社区学习项目，与 Hasselblad 无隶属或背书关系。</p>
+        <h3>本版资料基准</h3><p id="source-version">后期机械配置，详见型号版本说明。</p>
+        <button class="source-card" data-page="12"><strong>内部机构分解图</strong><span>PDF 第 12 页 →</span></button>
+        <button class="source-card" data-page="17"><strong>外壳与侧盖</strong><span>PDF 第 17 页 →</span></button>
+        <button class="source-card" id="insert-source" data-page="23"><strong>片芯、滚轮与压片板</strong><span>PDF 第 23 页 →</span></button>
+        <h3>实物照片参考记录</h3><p>公开版不包含维护者个人收集的实物照片。以下保留参考范围：43、45 用于 A12 辨认；44 仅作局部参考；41、42 有 16 张标识；40 型号未定。</p>
+        <div class="photo-grid" id="photo-grid"></div>
+        <a href="https://www.galerie-photo.com/manuels/hasselblad-magasins.pdf" target="_blank" rel="noopener">维修手册来源站（66 页） ↗</a>
+        <a href="https://butkus.org/chinon/hasselblad/hasselblad_a-type_magazines/hasselblad_a-type_magazines.htm" target="_blank" rel="noopener">A-type 使用说明书来源页 ↗</a>
+        <p><button data-public-document="user">选择自己的使用说明书 PDF</button></p>
+      </section>
+    </aside>
+  </main>
+  <footer class="app-footer"><span>手册 16 型后背 · A12 / A16 / A24 精细拆装 · 其余型号结构学习</span><span>尺寸、孔位和行程为示意；不验证弹簧预紧、片距或维修结果。</span></footer>
+  <dialog id="source-dialog"><div class="dialog-bar"><div><strong id="source-title">维修手册</strong><p id="source-caption"></p></div><div><a id="source-pdf-link" target="_blank" rel="noopener" hidden>打开资料来源 ↗</a><button id="close-dialog" aria-label="关闭文献索引">关闭 ×</button></div></div><div class="source-image-wrap"><img id="source-image" alt="" hidden><div id="public-source-content" class="public-source-content"></div></div></dialog>
+  <dialog id="video-dialog"><div class="dialog-bar"><div><strong id="video-title"></strong><p id="video-author"></p></div><button id="close-video" aria-label="关闭视频">关闭 ×</button></div><div id="video-player"></div><div class="video-dialog-notes"><p id="video-segment-note"></p><p id="video-caution"></p><a id="video-original" target="_blank" rel="noopener">在 YouTube 打开原视频 ↗</a><span>若内嵌播放器不可用，请打开原视频；本地动画仍可离线观看。</span></div></dialog>
+</body>
+</html>

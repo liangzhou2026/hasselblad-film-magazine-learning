@@ -1,0 +1,16 @@
+name: Check source package
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Audit source, references and model scope
+        run: node scripts/check-release.mjs
+      - name: Check bilingual model and course content
+        run: node --expose-gc scripts/check-i18n.cjs

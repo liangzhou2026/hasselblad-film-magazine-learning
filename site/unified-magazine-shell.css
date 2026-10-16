@@ -1,0 +1,25 @@
+/* Shared controls and layout: identical rules for every magazine. */
+.brand-mark span{letter-spacing:0}
+.parts-panel,.info-panel{scrollbar-gutter:stable}
+.magazine-picker #magazine-scope{min-height:5.4em;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+.catalog-tools{min-height:33px;align-items:center}
+.catalog-note{font-size:.72rem;line-height:1.5;color:var(--muted);padding:7px 6px}
+.learning-launch{min-height:56px}
+.learning-launch .learning-context{font-size:.77rem;font-weight:600;color:var(--ink);padding:7px 0;white-space:nowrap}
+.learning-launch p{font-size:.75rem;line-height:1.5;color:var(--muted);margin:0}
+.learning-launch p span{white-space:nowrap}
+.view-modes{display:grid;grid-template-columns:repeat(4,76px);gap:4px}
+.info-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+.info-tabs button{flex:none;min-width:0}
+.info-content .part-english{font-size:.8rem;color:var(--muted);margin:0 0 18px}
+.info-content .source-note{font-size:.72rem;color:var(--muted);margin-top:12px}
+.model-label.selected small{font-family:Consolas,monospace;font-size:inherit}
+@media(max-width:580px){.learning-launch{min-height:56px}.learning-launch p{font-size:.7rem}.view-modes{grid-template-columns:repeat(4,minmax(0,76px));gap:0}}
+body.free-magazine [hidden]{display:none!important}
+.part-row button[aria-pressed=true]{color:var(--ink);background:transparent}
+body.free-magazine .part-row.part-hidden{opacity:.55}
+body.free-magazine #model-differences{margin:20px 0;font-size:.8rem;line-height:1.75}
+body.free-magazine #model-differences summary{cursor:pointer}
+body.free-magazine #difference-list{padding-left:20px}
+body.free-magazine #search-count{margin:8px}
+body.free-magazine #part-relation:empty{display:none}

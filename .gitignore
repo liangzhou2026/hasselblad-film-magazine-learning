@@ -1,0 +1,24 @@
+# Development output and private research material never belong in this repo.
+node_modules/
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+*.log
+*.pdf
+*.jpg
+*.jpeg
+*.blend
+*.blend1
+*.glb
+*.zip
+*.7z
+*.exe
+*.msi
+downloads/
+private/
+reference/
+releases/
+coverage/
+audit-output/
