@@ -8,7 +8,7 @@
   const phrases = new RegExp(keys.map(escape).join('|'), 'g');
   const cache = new Map(), originals = new WeakMap(), attributes = new WeakMap();
   const excluded = 'script,style,[contenteditable],.local-pdf-name,[data-no-i18n]';
-  const attrNames = ['aria-label', 'aria-valuetext', 'title', 'placeholder', 'label'];
+  const attrNames = ['aria-label', 'aria-valuetext', 'title', 'placeholder', 'label', 'alt'];
   let language = 'zh', observer;
   const normalize = value => value === 'en' ? 'en' : ['zh', 'zh-CN'].includes(value) ? 'zh' : null;
   try { language = normalize(new URLSearchParams(location.search).get('lang')) || normalize(localStorage.getItem('a12-language')) || 'zh'; } catch (_) {}

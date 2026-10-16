@@ -9,6 +9,13 @@ Thumbs.db
 *.pdf
 *.jpg
 *.jpeg
+# Only the audited manual bundle is published; its manifest is checked in CI.
+!site/manuals/service-manual.pdf
+!site/manuals/user-manual.pdf
+!site/manuals/service-bulletins.pdf
+!site/manuals/pages/service-p[0-9][0-9].jpg
+!site/manuals/pages/user-p[0-9][0-9].jpg
+!site/manuals/pages/bulletin-p[0-9][0-9][0-9].jpg
 *.blend
 *.blend1
 *.glb

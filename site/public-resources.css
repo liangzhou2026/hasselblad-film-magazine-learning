@@ -9,4 +9,31 @@
 .source-links a[aria-disabled="true"] { opacity: .55; cursor: default; text-decoration: none; }
 .photo-card.public-photo-reference { min-height: 68px; padding: 14px; text-align: left; background: #f5f5ef; }
 .public-photo-reference small { display: block; padding-top: 6px; color: #737b75; }
+.public-source-content.document-reader { max-width: none; padding: 0; text-align: left; }
+.manual-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; position: sticky; top: -20px; z-index: 1; background: #f8faf8f5; border: 1px solid #d7e0db; border-radius: 6px; padding: 12px; }
+.manual-toolbar select { min-width: 0; max-width: 100%; flex: 1 1 270px; font: inherit; font-size: .82rem; color: inherit; background: white; border: 1px solid #d7e0db; border-radius: 5px; padding: 9px; }
+.manual-page-form { display: flex; align-items: center; justify-content: center; gap: 7px; font-size: .8rem; }
+.manual-page-form input { width: 66px; min-width: 0; padding: 8px 5px; font: inherit; border: 1px solid #c8d5ce; border-radius: 4px; background: white; }
+.manual-page-form input[aria-invalid="true"] { border-color: #b54d32; }
+.manual-page-form span { white-space: nowrap; }
+.document-reader .manual-reader-status { min-height: 1.7em; margin: 10px 0; font-size: .78rem; color: #53655d; }
+.manual-page-viewer { min-height: 180px; background: #e0e6e2; border: 1px solid #d4ddd7; }
+.manual-page-viewer #source-image { width: 100%; max-width: 100%; height: auto; }
+.manual-document-actions { display: flex; flex-wrap: wrap; gap: 12px 22px; padding: 16px 0 12px; font-size: .85rem; }
+.document-reader .source-note { margin: 0 0 10px; font-size: .77rem; color: #65736b; }
+.local-pdf-option summary { cursor: pointer; font-weight: 600; font-size: .85rem; }
+.local-pdf-option label { margin-top: 14px; font-size: .8rem; }
+.manual-library-links { display: flex; flex-direction: column; gap: 8px; margin: 14px 0; }
+.manual-library-links button { text-align: left; }
+@media (max-width: 850px) { .manual-toolbar { top: -8px; } }
+@media (max-width: 540px) {
+  #source-dialog .dialog-bar { padding: 12px; }
+  #source-dialog .dialog-bar > div { min-width: 0; }
+  #source-dialog .dialog-bar > div:last-child { flex-shrink: 1; gap: 8px; }
+  .manual-toolbar { gap: 6px; padding: 9px 6px; }
+  .manual-toolbar button { font-size: .75rem; padding: 8px; }
+  .manual-toolbar select { flex-basis: 100%; }
+  .manual-page-form { gap: 5px; }
+  .manual-page-form input { width: 54px; }
+}
 @media (max-width: 650px) { .public-source-content { padding: 18px; } .local-pdf-option { padding: 14px; } }

@@ -9,15 +9,21 @@
 
 模型材料使用程序生成的表面图，不以网络商品照片或维修手册页面作为贴图。可选 Releases 中的教学 GLB 和零件表沿用本项目 MIT 许可；许可不代表尺寸、结构或维修顺序经过原厂验证。
 
-## 只提供出处，不随公开包再分发
+## 随站点提供的维修学习资料
 
-- Hasselblad《Film Magazines》原厂维修手册（开发时使用 66 页扫描版）：[Galerie-photo 来源 PDF](https://www.galerie-photo.com/manuels/hasselblad-magasins.pdf)。网页采用 PDF 阅读器页码，可能随扫描版本变化。
-- 《A-type Film Magazines》使用说明书：[Butkus 来源页](https://butkus.org/chinon/hasselblad/hasselblad_a-type_magazines/hasselblad_a-type_magazines.htm)。
-- Service Infos / S7 改型通告：开发时使用 193 页合集；尚无核实的公开下载地址，保留资料索引，允许用户选择其自行取得的本地 PDF。
-- 维护者收集的实物照片、网络商品照片、手册扫描件及其页面截图不包含在仓库、Pages 文件或模型附件中。
+- Hasselblad《Film Magazines》原厂维修手册，66 页扫描版：`site/manuals/service-manual.pdf`。[Galerie-photo 来源 PDF](https://www.galerie-photo.com/manuels/hasselblad-magasins.pdf)。网页采用 PDF 阅读器页码，可能随扫描版本变化。
+- 《A-type Film Magazines》使用说明书，23 页：`site/manuals/user-manual.pdf`。[Butkus 来源页](https://butkus.org/chinon/hasselblad/hasselblad_a-type_magazines/hasselblad_a-type_magazines.htm)。
+- Service Infos / S7 改型通告，193 页合订本：`site/manuals/service-bulletins.pdf`。由维护者提供；原始公开下载地址尚未核实，因此不杜撰来源链接。
+- `site/manuals/pages/` 中的页图由这些 PDF 渲染，便于对照零件和维修步骤；不是原创插画或重新授权的模型贴图。文件与 SHA256 记录于 `site/manuals/manifest.json`。
+
+这三份手册及其页图供维修学习，保留原有作者、出版者、版权及来源标识；本项目没有将它们重新许可为 MIT。公开网站可下载、非商业学习用途均不表示原作品已成为公共领域。
+
+## 只提供出处、不随公开包分发的资料
+
+- 维护者收集的实物照片和网络商品照片不包含在仓库、Pages 文件或模型附件中。
 - YouTube 视频只提供原始链接和用户主动点击后的嵌入播放，不包含下载片段、截图或转载视频。视频名称、链接见 `site/video-library.js`，视频版权属于原作者。
 
-MIT 许可不覆盖上述原始手册、照片、视频、品牌或商标。公开可访问并不代表获准再分发。引用资料的链接失效时，请以合法取得的同版原文核对；不要将私人资料目录重新加进仓库。
+MIT 许可不覆盖上述原始手册及页图、照片、视频、品牌或商标。引用资料的链接失效时，请以同版原文核对；不要将私人资料目录重新加进仓库。
 
 ## 学习边界
 

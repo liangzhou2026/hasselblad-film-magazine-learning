@@ -8,14 +8,17 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 
 const root = path.resolve(process.argv[2] || path.join(path.dirname(fileURLToPath(import.meta.url)), '..'));
 const site = path.join(root, 'site');
+const manuals = path.join(site, 'manuals');
 const MiB = 1024 * 1024;
 const errors = [], warnings = [], checks = [];
 const files = [], textFiles = new Map();
+const auditedManualFiles = new Set();
 const expectedModels = ['A12', 'A16', 'A16S', 'A24', 'A32', 'A12TCC', 'A16TCC', 'A24TCC', 'E12', 'E16', 'E24', 'E12CC', 'MAGAZINE70', 'POLAROID100', 'POLAPLUS', 'POLABASIC'];
 const preciseModels = ['A12', 'A16', 'A24'];
 const relative = file => path.relative(root, file).split(path.sep).join('/');
@@ -41,9 +44,57 @@ function walk(directory) {
       textFiles.set(file, fs.readFileSync(file, 'utf8'));
     }
     if (/^(?:\.env(?:\..+)?|id_rsa|id_ed25519|credentials(?:\.json)?)$/i.test(entry.name) && !/\.example$/i.test(entry.name)) issue(errors, 'sensitive-filename', file);
-    if (/\.(?:blend\d?|glb|zip|7z|msi|exe|pdf|jpe?g)$/i.test(entry.name)) issue(errors, 'excluded-attachment-in-source-package', file);
+    if (/\.(?:blend\d?|glb|zip|7z|msi|exe|pdf|jpe?g)$/i.test(entry.name) && !auditedManualFiles.has(path.resolve(file))) issue(errors, 'excluded-attachment-in-source-package', file);
   }
 }
+check('audited-manual-bundle', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(manuals, 'manifest.json'), 'utf8'));
+  if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.documents) || !Array.isArray(manifest.images)) throw new Error('Unsupported manual manifest schema.');
+  const expected = new Map([
+    ['manual', { file: 'service-manual.pdf', pages: 66, imagePrefix: 'service-p', digits: 2 }],
+    ['user', { file: 'user-manual.pdf', pages: 23, imagePrefix: 'user-p', digits: 2 }],
+    ['bulletins', { file: 'service-bulletins.pdf', pages: 193, imagePrefix: 'bulletin-p', digits: 3 }]
+  ]);
+  if (manifest.documents.length !== expected.size) throw new Error('The bundle must contain exactly the three declared learning manuals.');
+  const documents = new Map(), verified = new Set(), imagePages = new Set();
+  function verify(entry, kind) {
+    if (!entry || typeof entry.file !== 'string' || !entry.file || entry.file.includes('\\') || entry.file.includes('\0') || path.posix.isAbsolute(entry.file) || /^[a-z]:/i.test(entry.file) || entry.file.split('/').some(segment => !segment || segment === '.' || segment === '..')) throw new Error('Invalid path in manual manifest.');
+    const file = path.resolve(manuals, entry.file);
+    if (!inside(manuals, file) || !inside(fs.realpathSync(manuals), fs.realpathSync(file))) throw new Error('Manual manifest path escapes site/manuals.');
+    if (verified.has(file)) throw new Error('Duplicate file in manual manifest: ' + entry.file);
+    const stat = fs.lstatSync(file);
+    if (!stat.isFile() || stat.isSymbolicLink()) throw new Error('Manual entries must be regular files: ' + entry.file);
+    if (!Number.isSafeInteger(entry.bytes) || entry.bytes <= 0 || stat.size !== entry.bytes) throw new Error('Manual file size mismatch: ' + entry.file);
+    if (!/^[a-f0-9]{64}$/.test(entry.sha256 || '')) throw new Error('Invalid SHA256 in manual manifest: ' + entry.file);
+    const bytes = fs.readFileSync(file);
+    if (createHash('sha256').update(bytes).digest('hex') !== entry.sha256) throw new Error('Manual SHA256 mismatch: ' + entry.file);
+    if (kind === 'pdf' && bytes.subarray(0, 5).toString('ascii') !== '%PDF-') throw new Error('Invalid PDF header: ' + entry.file);
+    if (kind === 'jpg' && (bytes.length < 4 || bytes[0] !== 0xff || bytes[1] !== 0xd8 || bytes[2] !== 0xff || bytes[bytes.length - 2] !== 0xff || bytes[bytes.length - 1] !== 0xd9)) throw new Error('Invalid JPEG header or end marker: ' + entry.file);
+    verified.add(file);
+  }
+  for (const document of manifest.documents) {
+    const spec = expected.get(document.id);
+    if (!spec || documents.has(document.id) || document.file !== spec.file || document.pages !== spec.pages) throw new Error('Manual IDs, file names or page counts differ from the approved three-document bundle.');
+    if (typeof document.title !== 'string' || !document.title.trim()) throw new Error('Each manual needs a title.');
+    if (document.sourceUrl && !/^https?:\/\//.test(document.sourceUrl)) throw new Error('Manual source URLs must be public HTTP(S) links when supplied.');
+    verify(document, 'pdf');
+    documents.set(document.id, spec);
+  }
+  for (const image of manifest.images) {
+    const spec = documents.get(image.documentId);
+    if (!spec || !Number.isInteger(image.page) || image.page < 1 || image.page > spec.pages) throw new Error('Page image does not match a manual and page number.');
+    const expectedFile = 'pages/' + spec.imagePrefix + String(image.page).padStart(spec.digits, '0') + '.jpg';
+    if (image.file !== expectedFile) throw new Error('Unexpected manual page-image name.');
+    const pageKey = image.documentId + ':' + image.page;
+    if (imagePages.has(pageKey)) throw new Error('Duplicate manual page image: ' + pageKey);
+    verify(image, 'jpg');
+    imagePages.add(pageKey);
+  }
+  const expectedImages = [...expected.values()].reduce((sum, spec) => sum + spec.pages, 0);
+  if (imagePages.size !== expectedImages) throw new Error('All 282 declared manual pages must have an audited image.');
+  for (const file of verified) auditedManualFiles.add(file);
+  return { documents: documents.size, pageImages: imagePages.size, checks: 'Approved paths, byte sizes, SHA256, PDF/JPEG headers and complete page coverage.' };
+});
 check('repository-and-site-exist', () => {
   if (!fs.existsSync(site) || !fs.existsSync(path.join(site, 'index.html'))) throw new Error('Expected site/index.html in the release repository.');
   walk(root);
@@ -111,7 +162,7 @@ for (const [file, source] of textFiles) {
     if (/\.js$/i.test(file)) {
       // Literal resource URLs only. Interpolated values are counted separately;
       // configured release URLs are intentionally not required to exist locally.
-      for (const match of source.matchAll(/(["'`])((?:\.\.?\/|assets\/|vendor\/)[^"'`\r\n]*)\1/g)) {
+      for (const match of source.matchAll(/(["'`])((?:\.\.?\/|assets\/|vendor\/|manuals\/)[^"'`\r\n]*)\1/g)) {
         if (/\.(?:html?|css|m?js|json|pdf|png|jpe?g|webp|svg|glb)(?:[?#]|$)/i.test(match[2])) reference(file, match[2], match.index, source);
       }
       for (const match of source.matchAll(/\b(?:fetch|import)\s*\(\s*(["'`])([^"'`\r\n]+)\1/g)) reference(file, match[2], match.index, source);

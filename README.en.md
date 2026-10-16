@@ -2,7 +2,7 @@
 
 [中文说明](README.md) · [MIT license](LICENSE) · [Third-party notices](THIRD_PARTY_NOTICES.md)
 
-[English demo](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=en) · [中文演示](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=zh) · [Models and source downloads](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.0)
+[English demo](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=en) · [中文演示](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=zh) · [Complete source with manuals](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.1) · [Model downloads](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.0)
 
 A bilingual Chinese/English, browser-based 3D learning tool for Hasselblad film magazines. This is an independent community project. Geometry is an educational approximation, not factory CAD or verified repair instructions.
 
@@ -30,7 +30,9 @@ Open the local URL printed by the server. The `/learning/` prefix tests project-
 
 The localization check constructs all 16 models and checks final displayed metadata, numeric identifiers, dynamic translations, language roundtrips and input preservation. It uses a DOM test double and does not replace browser/WebGL checks.
 
-The site constructs its models from JavaScript. No GLB downloads are needed to view it. Manual scans and collected reference photographs are excluded. Source links and session-only local PDF selection remain available. External references, YouTube and Release downloads require Internet access. No installable offline cache is provided.
+The site constructs its models from JavaScript. No GLB downloads are needed to view it. It includes the 66-page film magazine service manual, the 23-page user manual and a 193-page Service Infos / S7 bulletin compilation, with source notes. The PDFs retain their original bytes. All 282 page images load on demand for mobile reading and part/sequence references. Source links and session-only local PDF selection remain available. Collected reference photographs are excluded. External source links, YouTube and Release downloads require Internet access. No installable offline cache is provided.
+
+The release check allows only PDFs and page images declared in `site/manuals/manifest.json`, verifying file size, SHA256, format and paths. Undeclared manuals, photographs and research attachments remain excluded.
 
 ## Deploy your own copy
 
@@ -42,6 +44,6 @@ GLB exports do not include browser animations, Canvas labels or scene lighting. 
 
 ## License and contributions
 
-Original code, documentation and generated teaching geometry use MIT. Three.js keeps its own MIT notice. Third-party manuals, photographs, videos and trademarks are not covered by this license or bundled. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Original code, project-authored documentation and generated teaching geometry use MIT. Three.js keeps its own MIT notice. The three included manuals and their page images retain their original rights and notices; they are provided for repair learning and are not licensed under MIT. The service manual is sourced from Galerie-photo and the user manual from Butkus. The maintainer supplied the 193-page bulletin compilation; its original public download URL has not been verified. Public availability does not make a work public domain. Collected photographs and video copies remain excluded. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 Contributions should cite a manual edition/page or another verifiable source and distinguish measured dimensions from approximations. See [CONTRIBUTING.md](CONTRIBUTING.md). Static checks do not establish mechanical, electrical, calibration or photographic correctness.
