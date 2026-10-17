@@ -82,7 +82,8 @@
     if (source.url) {
       const external = document.createElement('a'); external.href = source.url; external.target = '_blank'; external.rel = 'noopener'; external.textContent = '查看公开来源 ↗'; actions.append(external);
     }
-    content.append(actions, paragraph('文献来源：' + source.source, 'source-note'), paragraph('手册与扫描件版权归原权利人；不适用项目代码的 MIT 许可证。三维形状和动画位移为教学重建，请对照原文与实物。', 'source-note'));
+    content.insertBefore(actions, status);
+    content.append(paragraph('文献来源：' + source.source, 'source-note'), paragraph('手册与扫描件版权归原权利人；不适用项目代码的 MIT 许可证。三维形状和动画位移为教学重建，请对照原文与实物。', 'source-note'));
     const section = document.createElement('details'); section.className = 'local-pdf-option';
     const summary = document.createElement('summary'); summary.textContent = '可选：选择自己的 PDF';
     const label = document.createElement('label'); label.htmlFor = 'public-local-pdf'; label.textContent = '选择本地同版 PDF';

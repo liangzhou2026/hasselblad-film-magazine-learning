@@ -217,7 +217,8 @@ window.initA12Viewer = function(ctx) {
  }
  if(window.initA12VideoLibrary)window.initA12VideoLibrary({pause:()=>{pauseStep();lessonPlayer?.pause();}});
  document.addEventListener('click',e=>{
-  if(e.target.closest('a')){pauseStep();lessonPlayer?.pause();}
+  const link=e.target.closest('a');
+  if(link&&!link.closest('.responsive-jump-nav')){pauseStep();lessonPlayer?.pause();}
   const b=e.target.closest('button');if(!b)return;const d=b.dataset;
   if(d.page)openSource(d.page);if(d.select)selectPart(d.select);if(d.mode)applyMode(d.mode);if(d.tab){if(d.tab==='steps'&&!state.workflow)beginSequence($('#sequence-type').value);else setTab(d.tab);}if(d.photo)openPhoto(Number(d.photo));
   if(d.expand){expanded.has(d.expand)?expanded.delete(d.expand):expanded.add(d.expand);syncExpanded();}

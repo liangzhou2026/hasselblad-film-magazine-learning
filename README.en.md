@@ -2,7 +2,7 @@
 
 [中文说明](README.md) · [MIT license](LICENSE) · [Third-party notices](THIRD_PARTY_NOTICES.md)
 
-[English demo](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=en) · [中文演示](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=zh) · [Complete source with manuals](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.1) · [Model downloads](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.0)
+[English demo](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=en) · [中文演示](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=zh) · [Complete source with manuals](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.2) · [Model downloads](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.0)
 
 A bilingual Chinese/English, browser-based 3D learning tool for Hasselblad film magazines. This is an independent community project. Geometry is an educational approximation, not factory CAD or verified repair instructions.
 
@@ -17,6 +17,8 @@ Select **English** or **中文** in the page header. The interface, part names a
 Search accepts English and Chinese names and original part numbers. Translation preserves source data, numeric values and manual page references. Original PDFs, YouTube videos and optional GLB/JSON attachments retain their original content. “Film insert” and “film holder” both refer to the removable insert.
 
 ## Run locally
+
+Phones use a model-first single-column layout with the model selector at the top and shortcuts to the viewer, parts and references. Tablets adapt their columns to portrait or landscape. Small screens have collapsible view controls and larger touch targets. Models support one-finger rotation and two-finger pinch zoom; original manuals can be read page by page.
 
 Use Node.js 22+ and a modern WebGL browser. No npm install is needed.
 

@@ -225,24 +225,60 @@
     const hit = $('transparent-shell').checked && !state.isolated ? hits.find(item => meshToPart.get(item.object).inspectionOccluder !== true) || hits[0] : hits[0];
     return hit && meshToPart.get(hit.object);
   }
+  const pointers = new Map();
+  let pinchDistance = 0;
+  function pointerDistance() {
+    const [first, second] = [...pointers.values()];
+    return first && second ? Math.hypot(first.x - second.x, first.y - second.y) : 0;
+  }
+  function resumePointer() {
+    state.dragging = pointers.size > 0;
+    pinchDistance = pointerDistance();
+    if (pointers.size === 1) {
+      const [pointerId, point] = pointers.entries().next().value;
+      // Resuming after a pinch/cancel must neither jump nor turn its release into a tap.
+      state.pointerDown = { pointerId, x: point.x, y: point.y, lastX: point.x, lastY: point.y, moved: true };
+    } else state.pointerDown = null;
+  }
   renderer.domElement.addEventListener('pointerdown', event => {
-    state.dragging = true; state.pointerDown = { x: event.clientX, y: event.clientY, lastX: event.clientX, lastY: event.clientY, moved: false }; renderer.domElement.setPointerCapture(event.pointerId); $('hover-label').hidden = true;
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    state.dragging = true;
+    if (pointers.size === 1) state.pointerDown = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, lastX: event.clientX, lastY: event.clientY, moved: false };
+    else { state.pointerDown = null; pinchDistance = pointerDistance(); }
+    renderer.domElement.setPointerCapture(event.pointerId); $('hover-label').hidden = true;
   });
   renderer.domElement.addEventListener('pointermove', event => {
-    if (state.dragging && state.pointerDown) {
+    if (pointers.has(event.pointerId)) {
+      pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      if (pointers.size > 1) {
+        const distance = pointerDistance();
+        if (pinchDistance > 0 && distance > 0) zoom(pinchDistance / distance);
+        pinchDistance = distance;
+        return;
+      }
+      if (!state.pointerDown) resumePointer();
       const point = state.pointerDown, dx = event.clientX - point.lastX, dy = event.clientY - point.lastY;
       if (Math.hypot(event.clientX - point.x, event.clientY - point.y) > 4) point.moved = true;
       if (point.moved) { state.yaw -= dx * .008; state.pitch = Math.max(-1.35, Math.min(1.35, state.pitch + dy * .008)); document.querySelectorAll('[data-view]').forEach(button => button.setAttribute('aria-pressed', 'false')); }
       point.lastX = event.clientX; point.lastY = event.clientY; return;
     }
+    if (pointers.size || event.pointerType === 'touch') return;
     const hit = pick(event); $('hover-label').hidden = !hit || !actualLabel(hit); renderer.domElement.style.cursor = hit ? 'pointer' : 'grab';
     if (hit && actualLabel(hit)) { const rect = renderer.domElement.getBoundingClientRect(); $('hover-label').textContent = actualLabel(hit); $('hover-label').style.left = `${Math.max(8, Math.min(rect.width - 225, event.clientX - rect.left + 12))}px`; $('hover-label').style.top = `${Math.max(8, Math.min(rect.height - 60, event.clientY - rect.top + 12))}px`; }
   });
-  renderer.domElement.addEventListener('pointerup', event => {
-    if (state.pointerDown && !state.pointerDown.moved) { const hit = pick(event); if (hit) selectPart(hit.id); }
-    state.dragging = false; state.pointerDown = null; if (renderer.domElement.hasPointerCapture(event.pointerId)) renderer.domElement.releasePointerCapture(event.pointerId);
-  });
-  renderer.domElement.addEventListener('pointercancel', () => { state.dragging = false; state.pointerDown = null; });
+  function endPointer(event) {
+    if (!pointers.has(event.pointerId)) return;
+    const point = state.pointerDown;
+    if (event.type === 'pointerup' && pointers.size === 1 && point && point.pointerId === event.pointerId && !point.moved && Math.hypot(event.clientX - point.x, event.clientY - point.y) <= 4) {
+      const hit = pick(event); if (hit) selectPart(hit.id);
+    }
+    pointers.delete(event.pointerId); resumePointer();
+    if (renderer.domElement.hasPointerCapture(event.pointerId)) renderer.domElement.releasePointerCapture(event.pointerId);
+  }
+  renderer.domElement.addEventListener('pointerup', endPointer);
+  renderer.domElement.addEventListener('pointercancel', endPointer);
+  renderer.domElement.addEventListener('lostpointercapture', endPointer);
   renderer.domElement.addEventListener('pointerleave', () => $('hover-label').hidden = true);
   function zoom(factor) { state.distance = Math.max(state.fitDistance * .06, Math.min(state.fitDistance * 3.5, state.distance * factor)); }
   renderer.domElement.addEventListener('wheel', event => { event.preventDefault(); zoom(Math.exp(Math.max(-100, Math.min(100, event.deltaY)) * .002)); }, { passive: false });

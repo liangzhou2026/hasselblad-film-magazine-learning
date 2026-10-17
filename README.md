@@ -2,7 +2,7 @@
 
 [English](README.en.md) · [MIT](LICENSE) · [资料与许可范围](THIRD_PARTY_NOTICES.md)
 
-[在线学习（中文）](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=zh) · [English demo](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=en) · [含手册的完整源码](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.1) · [模型下载](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.0)
+[在线学习（中文）](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=zh) · [English demo](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=en) · [含手册的完整源码](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.2) · [模型下载](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.0)
 
 一个支持中文和英文的浏览器学习工具，用三维模型理解 Hasselblad 胶片后背的零件、结构、拆装和养护资料。独立社区项目，模型为教学近似，不是原厂 CAD 或实物维修验收依据。
 
@@ -21,6 +21,8 @@
 零件搜索同时支持中英文名称和编号。翻译不修改源模型、零件编号、数值或手册页码；原始 PDF、YouTube 视频及可选 GLB/JSON 附件保留原内容。英文中的 film insert / film holder 均指后背片芯。
 
 ## 本地运行
+
+手机按单栏显示，型号选择置顶，可用快捷导航在三维模型、零件和学习资料间跳转。平板随横竖屏调整分栏；视角和缩放按钮在小屏折叠，主要控件增大以便触摸操作。三维模型支持单指旋转和双指缩放；原厂手册可直接逐页阅读。
 
 需要支持 WebGL 的现代浏览器和 Node.js 22 或更新版本。无需安装 npm 依赖。
 
