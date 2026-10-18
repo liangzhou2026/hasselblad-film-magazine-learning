@@ -2,9 +2,30 @@
 
 [中文说明](README.md) · [MIT license](LICENSE) · [Third-party notices](THIRD_PARTY_NOTICES.md)
 
-[English demo](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=en) · [中文演示](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=zh) · [Complete source with manuals](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.2) · [Model downloads](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.0)
+**A free Chinese/English 3D learning tool: explore 16 Hasselblad film magazines in your browser, with A12 / A16 / A24 disassembly and assembly demos.**
 
-A bilingual Chinese/English, browser-based 3D learning tool for Hasselblad film magazines. This is an independent community project. Geometry is an educational approximation, not factory CAD or verified repair instructions.
+[Try the English demo](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=en) · [打开中文演示](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=zh)
+
+<p align="center">
+  <a href="https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?model=A12&amp;lang=en">
+    <img src="site/assets/a12-mobile.png" width="300" alt="Actual mobile screenshot of the A12 internal structure with Chinese part labels and controls for disassembly, assembly and exploded views.">
+  </a>
+</p>
+<p align="center"><em>Actual A12 mobile interface, shown in Chinese.</em></p>
+
+## Start in three steps
+
+1. [Open the demo](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?model=A12&lang=en) and select A12.
+2. Rotate the model and select a part to read its name and description. On phones, drag with one finger and pinch with two to zoom.
+3. Play the disassembly demo to explore how the parts relate, or switch to the assembly demo.
+
+**Educational approximations, not repair instructions.** This independent community project is not factory CAD. Animated movement does not validate real-world removal paths.
+
+[Feedback welcome](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/issues). Star the repository if you find it useful.
+
+[Complete source with manuals](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.2) · [Optional model downloads](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.0)
+
+## What you can explore
 
 - **A12, A16, A24:** selectable parts, 22-step disassembly and 26-stage assembly demonstrations, with rotation and zoom during playback, and lubrication references.
 - **13 additional models:** A16S, A32, A12TCC, A16TCC, A24TCC, E12, E16, E24, E12CC, Magazine 70, Polaroid 100, PolaPlus and PolaBasic. These offer free exploration and exploded views only, with names limited to documented parts.
@@ -38,7 +59,7 @@ The release check allows only PDFs and page images declared in `site/manuals/man
 
 ## Deploy your own copy
 
-Upload this directory's contents as the repository root, including `.github`. Select **GitHub Actions** as the Pages source in repository settings. The provided workflow deploys only `site/` on pushes to `main` or manual dispatch. Check the workflow result and deployed site, and update the README demo links to your own Pages address.
+Upload this directory's contents as the repository root, including `.github`. Select **GitHub Actions** as the Pages source in repository settings. The provided workflow deploys only `site/` on pushes to `main` or manual dispatch. Check the workflow result and deployed site, and update the README demo links plus the canonical, Open Graph and Twitter image URLs in `site/index.html` to your own Pages address.
 
 Optional generated GLB files and part lists are available in **[GitHub Releases](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.0)**, outside the source repository. To host your own downloads, upload each of the 13 `.glb` and 13 `.parts.json` files individually to release `v1.0.0`, then set `repository: 'owner/repository'` in `site/release-config.js`. An empty configuration disables downloads with an explanation. Uploading only a ZIP will not provide the individual download URLs.
 

@@ -130,6 +130,17 @@ check('actual engine handles dynamic counts, ARIA labels and sentence prefixes',
   assert.equal(rows.filter(row=>hasHan(row.translated)).length,0,JSON.stringify(rows.filter(row=>hasHan(row.translated))));
 });
 
+check('page description has a complete English translation', () => {
+  const description = read('index.html').match(/<meta\b[^>]*name="description"[^>]*content="([^"]+)"/)?.[1];
+  assert.ok(description);
+  const translated = english(description);
+  assert.ok(translated.includes('Chinese/English'));
+  assert.ok(translated.includes('16'));
+  assert.ok(translated.includes('A12/A16/A24'));
+  assert.ok(translated.includes('educational approximations'));
+  assert.equal(hasHan(translated), false);
+});
+
 check('Chinese-English-Chinese roundtrip preserves original text and attributes', () => {
   const parent = new Element('button'), text = new TextNode('后背外壳'); parent.append(text); parent.setAttribute('aria-label','显示后背外壳'); locale.body.append(parent);
   locale.ctx.A12_I18N.setLanguage('en'); assert.equal(text.nodeValue,english('后背外壳')); assert.equal(parent.getAttribute('aria-label'),'Show '+english('后背外壳'));

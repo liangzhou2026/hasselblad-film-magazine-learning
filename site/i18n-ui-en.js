@@ -5,7 +5,7 @@ window.A12_EN_UI = {
   '浏览器未能建立 WebGL 三维画面。请使用支持硬件加速的 Edge 或 Chrome；原图与中文资料仍可从文件夹查看。': 'The browser could not create a WebGL scene. Use Edge or Chrome with hardware acceleration. Reference documents remain available separately.',
   '细化模型未能加载：': 'The detailed model could not load: ',
   '哈苏 16 型后背 · 三维学习台': 'Hasselblad 16 Film Magazines · 3D Learning',
-  '16型哈苏胶片后背三维学习模型、中文零件与文献索引；A12、A16、A24另有拆卸安装学习动画。独立社区项目，几何与运动为教学示意。': 'Explore 16 Hasselblad film magazines with 3D models, parts and reference indexes. A12, A16 and A24 also include disassembly and assembly lessons. Independent community project; geometry and motion are educational approximations.',
+  '免费中英双语哈苏胶片后背三维学习工具：探索 16 款后背，观看 A12/A16/A24 拆卸与安装演示。独立社区项目，模型与动画为教学近似。': 'Free Chinese/English 3D explorer for 16 Hasselblad film magazines, with A12/A16/A24 disassembly and assembly demos. Independent community project; models and animations are educational approximations.',
   '胶片后背学习台': 'Film Magazine Learning', '后背学习台': 'Film Magazine Learning',
   '切换后背型号': 'Switch magazine model', '全部 16 型': 'All 16 models',
   '维修手册 ↗': 'Service manual ↗', '维修手册': 'Service manual', '后背型号': 'Magazine model',

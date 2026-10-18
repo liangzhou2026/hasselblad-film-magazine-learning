@@ -2,9 +2,28 @@
 
 [English](README.en.md) · [MIT](LICENSE) · [资料与许可范围](THIRD_PARTY_NOTICES.md)
 
-[在线学习（中文）](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=zh) · [English demo](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=en) · [含手册的完整源码](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.2) · [模型下载](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.0)
+**免费的中英双语三维学习工具：在浏览器中探索 16 款哈苏胶片后背，观看 A12 / A16 / A24 拆装演示。**
 
-一个支持中文和英文的浏览器学习工具，用三维模型理解 Hasselblad 胶片后背的零件、结构、拆装和养护资料。独立社区项目，模型为教学近似，不是原厂 CAD 或实物维修验收依据。
+[打开中文演示](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=zh) · [Try in English](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?lang=en)
+
+<p align="center">
+  <a href="https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?model=A12&amp;lang=zh">
+    <img src="site/assets/a12-mobile.png" width="300" alt="实际手机界面截图：A12 内部结构与零件标签，可见拆卸、安装和分层观察控件。">
+  </a>
+</p>
+<p align="center"><em>A12 实际手机界面（中文）。</em></p>
+
+## 三步开始
+
+1. [打开在线演示](https://liangzhou2026.github.io/hasselblad-film-magazine-learning/?model=A12&lang=zh)，选择 A12。
+2. 旋转模型，点击零件查看名称与说明。手机支持单指旋转、双指缩放。
+3. 点击「拆卸动画」，观察部件关系；也可切换到「安装动画」。
+
+**教学示意，非维修指南。** 独立社区项目，模型与动画不是原厂 CAD 或实物维修验收依据；示意位移不代表实际取件路线。
+
+欢迎[反馈问题](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/issues)；觉得有用，也可以点个 Star 收藏。
+
+[含手册的完整源码](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.2) · [可选模型下载](https://github.com/liangzhou2026/hasselblad-film-magazine-learning/releases/tag/v1.0.0)
 
 ## 可以学习什么
 
@@ -50,7 +69,7 @@ node --expose-gc scripts/check-i18n.cjs
 1. 新建一个空仓库，将本目录的**内容**作为仓库根上传或使用 Git 推送。包括 `.github`、`.gitignore` 等隐藏文件；不要上传整个研究工作目录。
 2. 在 GitHub 仓库 Settings → Pages → Build and deployment 中选择 **GitHub Actions**。
 3. 默认分支使用 `main`。推送后，`Check source package` 检查内容，`Publish learning site` 仅将 `site/` 部署到 Pages。也可在 Actions 手动运行后者。若使用其他默认分支，修改工作流的 `branches`。
-4. 以自己仓库的 Pages 工作流实际返回地址为准，并更新 README 中的演示链接。
+4. 以自己仓库的 Pages 工作流实际返回地址为准，并更新 README 中的演示链接，以及 `site/index.html` 的 canonical、Open Graph 和 Twitter 图片网址。
 
 工作流仅使用仓库自带的 `GITHUB_TOKEN` 权限，不需要在源文件中填写密钥。开启 Pages 受账户、仓库可见性和组织策略影响；部署后检查 Actions 运行结果和实际页面。
 
