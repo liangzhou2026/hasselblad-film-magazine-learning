@@ -186,6 +186,37 @@ for (const [file, source] of textFiles) {
   }
 }
 
+check('showcase-assets-and-share-metadata', () => {
+  const html = fs.readFileSync(path.join(site, 'index.html'), 'utf8');
+  const metadata = new Map([...html.matchAll(/<meta\b[^>]*(?:property|name)="([^"]+)"[^>]*content="([^"]*)"[^>]*>/g)].map(match => [match[1], decodeHTML(match[2])]));
+  const canonical = html.match(/<link\b[^>]*rel="canonical"[^>]*href="([^"]+)"/)?.[1];
+  if (!canonical || !/^https:\/\//.test(canonical) || !canonical.endsWith('/')) throw new Error('A complete HTTPS canonical project URL is required.');
+  if (metadata.get('og:url') !== canonical || metadata.get('og:type') !== 'website' || metadata.get('twitter:card') !== 'summary_large_image') throw new Error('Canonical, Open Graph and Twitter card settings must agree.');
+  for (const field of ['description', 'og:site_name', 'og:title', 'og:description', 'og:image:alt', 'twitter:title', 'twitter:description', 'twitter:image:alt']) {
+    if (!metadata.get(field)?.trim()) throw new Error('Missing showcase metadata: ' + field);
+  }
+  const imagePath = 'assets/social-preview.png';
+  const imageURL = new URL(imagePath, canonical).href;
+  if (metadata.get('og:image') !== imageURL || metadata.get('twitter:image') !== imageURL || metadata.get('og:image:type') !== 'image/png') throw new Error('Share images must use the deployed absolute PNG URL.');
+  function pngSize(file) {
+    const bytes = fs.readFileSync(file);
+    if (bytes.length < 24 || bytes.subarray(0, 8).toString('hex') !== '89504e470d0a1a0a' || bytes.subarray(12, 16).toString('ascii') !== 'IHDR') throw new Error('Invalid showcase PNG: ' + relative(file));
+    return { width: bytes.readUInt32BE(16), height: bytes.readUInt32BE(20), bytes: bytes.length };
+  }
+  const preview = pngSize(path.join(site, imagePath));
+  if (preview.width !== 1280 || preview.height !== 640 || preview.bytes >= 1000000) throw new Error('Share image must be 1280 x 640 and smaller than 1 MB.');
+  if (metadata.get('og:image:width') !== String(preview.width) || metadata.get('og:image:height') !== String(preview.height)) throw new Error('Open Graph dimensions do not match the image.');
+  const screenshot = pngSize(path.join(site, 'assets/a12-mobile.png'));
+  if (screenshot.width !== 947 || screenshot.height !== 2048) throw new Error('The original mobile screenshot dimensions must be preserved.');
+  for (const name of ['README.md', 'README.en.md']) {
+    const file = path.join(root, name), source = fs.readFileSync(file, 'utf8');
+    const images = [...source.matchAll(/<img\b[^>]*src="([^"]+)"[^>]*>/g)];
+    if (!images.some(match => match[1] === 'site/assets/a12-mobile.png')) throw new Error(name + ' is missing the real mobile screenshot.');
+    for (const match of images) reference(file, match[1], match.index, source);
+  }
+  return { preview, screenshot, canonical, scope: 'Static metadata and local assets only; publishing and social-platform caches require separate verification.' };
+});
+
 check('licenses-present', () => {
   const license = path.join(root, 'LICENSE');
   if (!fs.existsSync(license) || !/MIT License/.test(fs.readFileSync(license, 'utf8'))) throw new Error('Root MIT LICENSE missing.');
